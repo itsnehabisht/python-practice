@@ -1,5 +1,16 @@
 # python-practice
 
-Learning python.
+This repository contains my Python learning journey.
 <br>
-Author - Neha
+
+## Topics Covered
+- Loops
+- Functions
+- Conditional Statements
+- Patterns
+- Recursion
+
+## Mini Projects
+- Snake Water Gun Game
+
+created by - Neha Bisht
