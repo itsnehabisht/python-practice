@@ -11,6 +11,6 @@ This repository contains my Python learning journey.
 - Recursion
 
 ## Mini Projects
-- Snake Water Gun Game
+- Scientific Calculator
 
 created by - Neha Bisht
