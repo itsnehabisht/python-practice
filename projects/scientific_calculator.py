@@ -2,24 +2,17 @@
 import math
 def calculator():
     while True:
+        choice = input("Enter operation: ")
 
-        num1=float(input("enter first number:"))
-        num2=float(input("enter second number:"))
-        choice = input("""
-        Choose operation:
-        +
-        -
-        *
-        /
-        %
-        sqrt
-        power
-        sin
-        cos
-        tan
-        log
-        Enter choice:
-        """)
+        if choice in ["+", "-", "*", "/", "power"]:
+            num1 = float(input("Enter first number: "))
+            num2 = float(input("Enter second number: "))
+
+
+        elif choice in ["sqrt", "sin", "cos", "tan", "log"]:
+
+            num1 = float(input("Enter number: "))
+
 
         if choice == "+":
             result = num1+num2
@@ -44,6 +37,8 @@ def calculator():
             result = math.cos(math.radians(num1))
         elif choice == "tan":
             result = math.tan(math.radians(num1))
+        elif choice == "log":
+            result = math.log(num1)
         else:
             result = "invalid operation"
 
