@@ -26,8 +26,9 @@ This repository documents my Python learning journey as I prepare for software e
 - 🧮 Scientific Calculator
 - 🏧 ATM Menu System
 - 🎲 Number Guessing Game
+- tic-tac-toe game
 
-More projects will be added as I continue learning.
+
 
 ---
 
@@ -70,7 +71,6 @@ My goal is to build a strong programming foundation, create real-world projects,
 - ✅ Functions
 - ✅ Mini Projects
 
-🚀 More topics and projects will be added regularly.
 
 ---
 
