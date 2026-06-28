@@ -1,97 +1,175 @@
-from random import randrange
+import random
+
+
+def create_board():
+    return [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
 
 
 def display_board(board):
-	print("+-------" * 3,"+", sep="")
-	for row in range(3):
-		print("|       " * 3,"|", sep="")
-		for col in range(3):
-			print("|   " + str(board[row][col]) + "   ", end="")
-		print("|")
-		print("|       " * 3,"|",sep="")
-		print("+-------" * 3,"+",sep="")
+    for row in board:
+        print(" | ".join(str(cell) for cell in row))
 
 
-def enter_move(board):
-	ok = False	# fake assumption - we need it to enter the loop
-	while not ok:
-		move = input("Enter your move: ") 
-		ok = len(move) == 1 and move >= '1' and move <= '9' # is user's input valid?
-		if not ok:
-			print("Bad move - repeat your input!") # no, it isn't - do the input again
-			continue
-		move = int(move) - 1 	# cell's number from 0 to 8
-		row = move // 3 	# cell's row
-		col = move % 3		# cell's column
-		sign = board[row][col]	# check the selected square
-		ok = sign not in ['O','X'] 
-		if not ok:	# it's occupied - to the input again
-			print("Field already occupied - repeat your input!")
-			continue
-	board[row][col] = 'O' 	# set '0' at the selected square
+def player_move(board):
+
+    while True:
+
+        try:
+            move = int(input("Enter your move (1-9): "))
+
+            if move < 1 or move > 9:
+                print("Enter a number between 1-9")
+                continue
+
+            move -= 1
+
+            row = move // 3
+            col = move % 3
 
 
-def make_list_of_free_fields(board):
-	free = []	
-	for row in range(3): # iterate through rows
-		for col in range(3): # iterate through columns
-			if board[row][col] not in ['O','X']: # is the cell free?
-				free.append((row,col)) # yes, it is - append new tuple to the list
-	return free
+            if board[row][col] not in ['O', 'X']:
+                board[row][col] = 'O'
+                break
+
+            else:
+                print("Field already occupied!")
+
+        except ValueError:
+            print("Please enter a number!")
 
 
-def victory_for(board,sgn):
-	if sgn == "X":	# are we looking for X?
-		who = 'me'	# yes - it's computer's side
-	elif sgn == "O": # ... or for O?
-		who = 'you'	# yes - it's our side
-	else:
-		who = None	# we should not fall here!
-	cross1 = cross2 = True  # for diagonals
-	for rc in range(3):
-		if board[rc][0] == sgn and board[rc][1] == sgn and board[rc][2] == sgn:	# check row rc
-			return who
-		if board[0][rc] == sgn and board[1][rc] == sgn and board[2][rc] == sgn: # check column rc
-			return who
-		if board[rc][rc] != sgn: # check 1st diagonal
-			cross1 = False
-		if board[2 - rc][2 - rc] != sgn: # check 2nd diagonal
-			cross2 = False
-	if cross1 or cross2:
-		return who
-	return None
+def computer_move(board):
+
+    empty = []
+
+    for row in range(3):
+        for col in range(3):
+
+            if board[row][col] not in ['O', 'X']:
+                empty.append((row, col))
 
 
-def draw_move(board):
-	free = make_list_of_free_fields(board) # make a list of free fields
-	cnt = len(free)
-	if cnt > 0:	
-		this = randrange(cnt)
-		row, col = free[this]
-		board[row][col] = 'X'
+    row, col = random.choice(empty)
+
+    board[row][col] = 'X'
 
 
-board = [ [3 * j + i + 1 for i in range(3)] for j in range(3) ] 
-board[1][1] = 'X' # set first 'X' in the middle
-free = make_list_of_free_fields(board)
-human_turn = True # which turn is it now?
-while len(free):
-	display_board(board)
-	if human_turn:
-		enter_move(board)
-		victor = victory_for(board,'O')
-	else:	
-		draw_move(board)
-		victor = victory_for(board,'X')
-	if victor != None:
-		break
-	human_turn = not human_turn		
-	free = make_list_of_free_fields(board)
+def check_winner(board):
 
-display_board(board)
-if victor == 'you':
-	print("You won!")
-elif victor == 'me':
-	print("I won")
-else:
-	print("Tie!")
+    # rows
+    for row in range(3):
+
+        if board[row][0] == board[row][1] == board[row][2] \
+        and board[row][0] in ['O', 'X']:
+
+            return board[row][0]
+
+
+    # columns
+    for col in range(3):
+
+        if board[0][col] == board[1][col] == board[2][col] \
+        and board[0][col] in ['O', 'X']:
+
+            return board[0][col]
+
+
+    # diagonal 1
+    if board[0][0] == board[1][1] == board[2][2] \
+    and board[0][0] in ['O', 'X']:
+
+        return board[0][0]
+
+
+    # diagonal 2
+    if board[0][2] == board[1][1] == board[2][0] \
+    and board[0][2] in ['O', 'X']:
+
+        return board[0][2]
+
+
+    return None
+
+
+
+def is_draw(board):
+
+    for row in board:
+
+        for cell in row:
+
+            if cell not in ['O', 'X']:
+                return False
+
+    return True
+
+
+
+# -------- GAME START --------
+
+
+while True:
+
+    board = create_board()
+
+    winner = None
+
+
+    while True:
+
+        display_board(board)
+
+        player_move(board)
+
+        winner = check_winner(board)
+
+
+        if winner:
+            display_board(board)
+            break
+
+
+        if is_draw(board):
+            display_board(board)
+            break
+
+
+
+        computer_move(board)
+
+        winner = check_winner(board)
+
+
+        if winner:
+            display_board(board)
+            break
+
+
+        if is_draw(board):
+            display_board(board)
+            break
+
+
+
+    # result
+
+    if winner == "X":
+        print("Computer wins!")
+
+    elif winner == "O":
+        print("You win!")
+
+    else:
+        print("It's a tie!")
+
+
+    again = input("Do you want to play again? (y/n): ")
+
+
+    if again.lower() != "y":
+        print("Thanks for playing!")
+        break
