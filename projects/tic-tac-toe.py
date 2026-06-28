@@ -10,8 +10,12 @@ def create_board():
 
 
 def display_board(board):
+
+    print("+---+---+---+")
+
     for row in board:
-        print(" | ".join(str(cell) for cell in row))
+        print("| " + " | ".join(str(cell) for cell in row) + " |")
+        print("+---+---+---+")
 
 
 def player_move(board):
