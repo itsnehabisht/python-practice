@@ -28,24 +28,6 @@ This repository documents my Python learning journey as I prepare for software e
 - 🎲 Number Guessing Game
 - tic-tac-toe game
 
-
-
----
-
-## 📂 Repository Structure
-
-```
-python-practice/
-│
-├── 01_Conditions/
-├── 02_File_Handling/
-├── 03_Functions/
-├── 04_Loops/
-├── 05_OOP/
-├── 06_Projects/
-└── README.md
-```
-
 ---
 
 ## 🛠️ Technologies Used
